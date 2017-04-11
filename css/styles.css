@@ -1,7 +1,14 @@
+@keyframes fadeIn { from { opacity:0;} to { opacity:1; } }
+
 html, body {
 	position: relative;
 	width: 100%; 
 	height:100%; 
+	margin: 0;
+}
+body {
+	
+
 }
 
 svg {
@@ -9,13 +16,16 @@ svg {
 	left: 50%;
 	position: absolute;
 	overflow: visible;
-	height: 100%;
-	width:100%;
+	
 }
 polyline {
 	fill: none;
 	stroke: #000;
 	stroke-width:5;
+	opacity: 0;
+    animation:fadeIn ease-in 1;
+    animation-duration:1s;
+    animation-fill-mode:forwards;
 }
 polyline:hover{
 	stroke: red;
@@ -25,3 +35,4 @@ polyline:hover:after {
 	position: absolute;
 
 }
+

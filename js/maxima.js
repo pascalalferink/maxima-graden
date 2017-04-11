@@ -24,49 +24,49 @@
 });
 */
 $(document).ready(function(){
-	var now =Math.round(new Date().getTime()/1000-86400);
-	var url = 'https://api.darksky.net/forecast/80bc2c3ddf3ba9400da4bde886f35c2c/52.387180,6.269893,'+now+'?units=si';
-	var i = 0;
-	var html1 = '<svg>';
-	var side = 25;
-	var calculatedDegrees = 0;
 
-	$.ajax({
-		url: url,
-		dataType: "jsonp",
-		success: function (data) {
+	function drawSwirl (date) {
+		var selectedDate = date;
+		var url = 'https://api.darksky.net/forecast/80bc2c3ddf3ba9400da4bde886f35c2c/52.387180,6.269893,'+selectedDate+'?units=si';
+		var i = 0;
+		var html1 = '<svg>';
+		var side = 25;
+		var calculatedDegrees = 0;
 
-			var hourly = data.hourly.data;
-			var oldX = 0;
-			var oldY = 0;
+		$.ajax({
+			url: url,
+			dataType: "jsonp",
+			success: function (data) {
 
-			for (i; i< hourly.length; i++) {
-				
-				calculatedDegrees = calculatedDegrees - hourly[i].temperature;
+				var hourly = data.hourly.data;
+				var oldX = 0;
+				var oldY = 0;
 
-				var newX  = oldX + side*Math.cos(Math.round(calculatedDegrees)/180*Math.PI);
-				var newY = oldY + side*Math.sin(Math.round(calculatedDegrees)/180*Math.PI);
+				for (i; i< hourly.length; i++) {
+					
+					calculatedDegrees = calculatedDegrees - hourly[i].temperature;
 
-				html1 = html1 + '<polyline data-time="" data-temp='+hourly[i].temperature+' points = "'+oldX+','+oldY+' '+newX+','+newY+' " />';
-				oldX = newX;
-				oldY = newY;
+					var newX  = oldX + side*Math.cos(Math.round(calculatedDegrees)/180*Math.PI);
+					var newY = oldY + side*Math.sin(Math.round(calculatedDegrees)/180*Math.PI);
+
+					html1 = html1 + '<polyline style="animation-delay: '+ (i+1)/10+'s" data-time="" data-temp='+hourly[i].temperature+' points = "'+oldX+','+oldY+' '+newX+','+newY+' " />';
+					oldX = newX;
+					oldY = newY;
+				}
+
+				html1 = html1 + '</svg>';
+				$('body').append(html1);
 			}
-
-			html1 = html1 + '</svg>';
-			$('body').append(html1);
-		}
-	});
-
-
-	/*for (i; i< degrees.length; i++) {
-
-		calculatedDegrees = calculatedDegrees - degrees[i];
-		console.log(degrees[i],calculatedDegrees);
-
-		x = x + side*Math.cos(Math.round(calculatedDegrees)/180*Math.PI);
-		y = y+ side*Math.sin(Math.round(calculatedDegrees)/180*Math.PI);
-		line= line + x+','+y+' ';
+		});
 	}
-	$('#line').attr('points',line);*/
+	console.log(new Date().getTime());
+	var selectedDate =Math.round(new Date().getTime()/1000);
 
+	$('input').blur(function(e){
+		console.log('change');
+		console.log($(this).val());
+
+	})
+
+	drawSwirl(selectedDate);
 });
