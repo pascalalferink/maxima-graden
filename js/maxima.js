@@ -28,7 +28,8 @@ $(document).ready(function(){
 	function drawSwirl (date) {
 		console.log(date);
 		var selectedDate = date;
-		var url = 'https://api.darksky.net/forecast/80bc2c3ddf3ba9400da4bde886f35c2c/52.387180,6.269893,'+selectedDate+'?units=si';
+		var url = 'functions.php';
+		//var url = 'https://api.darksky.net/forecast/80bc2c3ddf3ba9400da4bde886f35c2c/52.387180,6.269893,'+selectedDate+'?units=si';
 		var i = 0;
 		var html1 = '<svg>';
 		var side = 25;
@@ -36,6 +37,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			url: url,
+			type: "post",
 			dataType: "jsonp",
 			success: function (data) {
 
