@@ -1,29 +1,16 @@
 <?php
-	include('config.php');
-	//https://api.darksky.net/forecast/80bc2c3ddf3ba9400da4bde886f35c2c/52.387180,6.269893,1492004689?units=si
-	$darkskyUrl = '//api.darksky.net/forecast/';
-	$key = '80bc2c3ddf3ba9400da4bde886f35c2c';
-	$lat = 52.387180;
-	$lng = 6.269893;
-	//$date = int time (void);
-	$units = 'si';
-	
-	
-	if($_POST["date"]){ 
-		$date = $_POST["date"];
-	};
-	if(($_POST["lat"]) && ($_POST["lng"])){ 
-		$lat = $_POST["lat"];
-		$lng = $_POST["lng"];
-	};
-	if($_POST["units"]){ 
-		$units = $_POST["units"];
-	};
-	
-	$url = $darkskyUrl+$key+'/'+$lat+'/'+$lng+'?units='+$units;
+error_reporting(~0);
+ini_set('display_errors', 1);
 
-	$json = file_get_contents($url); 
-	$response = json_decode($json, true);
+$api_key = '80bc2c3ddf3ba9400da4bde886f35c2c';
+$timestamp = time();
 
-	echo json_encode($response);
+if($_POST["date"]){ 
+	$timestamp = $_POST["date"];
+};
+
+$json = 'https://api.darksky.net/forecast/'.$api_key.'/52.387180,6.269893,'.$timestamp.'?units=si'; 
+$json = file_get_contents($json); 
+echo $json;
+
 ?>
